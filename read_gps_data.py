@@ -2,7 +2,7 @@ import time
 import serial
 
 def mas2deg(mas):
-    return mas / 324000000 * 90
+    return mas / 3600000
 
 MODES = [
     "Code Search",

@@ -151,7 +151,7 @@ for c in range(12):
     strength = int(body[55 + c*CHANNEL_BYTES])
     iode = int(body[56 + c*CHANNEL_BYTES])
     status = int.from_bytes(body[57 + c*CHANNEL_BYTES:59 + c*CHANNEL_BYTES], byteorder='big')
-    accuracy = status & 0x1111
+    accuracy = status & 0b1111
     unhealthy = bool((status >> 4) & 1)
     antispoof = bool((status >> 5) & 1)
     momentum = bool((status >> 6) & 1)
@@ -177,7 +177,7 @@ for c in range(12):
 print("Receiver Status")
 status = int.from_bytes(body[125:127], byteorder='big')
 code = status & 1
-antenna = (status >> 1) & 0x11
+antenna = (status >> 1) & 0b11
 insufficient_visible = bool((status >> 3) & 1)
 autosurvey = bool((status >> 4) & 1)
 position_lock = bool((status >> 5) & 1)
@@ -186,7 +186,7 @@ cold_start = bool((status >> 7) & 1)
 filter_reset = bool((status >> 8) & 1)
 fast_acquisition = bool((status >> 9) & 1)
 narrow_band = bool((status >> 10) & 1)
-status_extra = (status >> 13) & 0x111
+status_extra = (status >> 13) & 0b111
 print(f"Code location:{CODE_LOCATION[code]}")
 print(f"Antenna sense:{ANTENNA_SENSE[antenna]}")
 print(f"Insufficient Visible Satellites:{insufficient_visible}")
@@ -212,7 +212,7 @@ print(f"Bias:{bias}ns offset:{offset/1000}kHz temperature:{temperature/2}°C")
 # UTC Parameters
 print("UTC Parameters")
 params = int(body[137])
-offset_value = status & 0x111111
+offset_value = status & 0b111111
 offset = bool((params >> 6) & 1)
 mode = bool((params >> 7) & 1)
 print(f"UTC mode:{UTC_MODE[mode]} UTC offset:{UTC_OFFSET[offset]} UTC offset value:{offset_value}")
